@@ -1,3 +1,5 @@
+require 'map_by_method'
+
 module AutoCompleteJquery      
   
   def self.included(base)
@@ -30,18 +32,45 @@ module AutoCompleteJquery
   # plugin used in conjunction with this plugin:
   # * http://www.dyve.net/jquery/?autocomplete
   module ClassMethods
-    def auto_complete_for(object, method, options = {})
-      define_method("auto_complete_for_#{object}_#{method}") do
+    def auto_complete_for(object, method=[], options = {})
+      define_method("auto_complete_for_#{object}_#{method.join("_")}") do
         object_constant = object.to_s.camelize.constantize
+        options[:delimiter] ||= " "
+        options[:order] ||= "#{method.first} ASC"
+        
+        delimiter = options[:delimiter]
+        options.delete :delimiter
+        
+        # assemble the conditions
+        conditions = ""
+        selects = ""
+        method = [method] unless method.is_a?(Array)
+        method.each do |arg|
+          conditions << "LOWER(#{arg}) LIKE ?"
+          conditions << " OR " unless arg == method.last
+          
+          selects << "#{object_constant.table_name}.#{arg}"
+          selects << "," unless arg == method.last
+        end
+        conditions = conditions.to_a
+        filters = "%#{params[:q].downcase}%".to_a*method.length
+        filters.each { |filter| conditions.push filter }
         
         find_options = { 
-          :conditions => [ "LOWER(#{method}) LIKE ?", '%' + params[:q].downcase + '%' ], 
-          :order => "#{method} ASC",
-          :select => "#{object_constant.table_name}.#{method}",
+          :conditions => conditions, 
+          :select => selects,
           :limit => 10 }.merge!(options)
         
-        @items = object_constant.find(:all, find_options).collect(&method)
-
+                
+        map_method = "map_by"
+        method.each do |m| 
+          map_method << "_#{m}"
+          map_method << "_and" unless m == method.last
+        end
+        
+        @items = object_constant.find(:all, find_options).send(map_method.to_sym)
+        @items.map! { |i| i.join(delimiter) } unless method.length == 1
+        
         render :text => @items.join("\n")
       end
     end
