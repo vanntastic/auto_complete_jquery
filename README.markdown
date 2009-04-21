@@ -24,46 +24,46 @@ INSTALLATION:
 
 1. Run: 
     
-      rake autocomplete:install
+        rake autocomplete:install
       
 2. Add this to your layout file (before application.js):
 
-      <%= include_autocomplete %>
+        <%= include_autocomplete %>
       
 3. Insert something similar to the following into the controller that you are working on:
 
-      class BlogController < ApplicationController
-        auto_complete_for :post, :title
-      end
+        class BlogController < ApplicationController
+          auto_complete_for :post, :title
+        end
     
 3. Now insert the following into application.js or anywhere where you are loading events for Jquery:
 
-      $(document).ready(function() {
-         $("input#post_title").autocomplete("auto_complete_for_post_title")
-       });
+        $(document).ready(function() {
+           $("input#post_title").autocomplete("auto_complete_for_post_title")
+         });
        
     What if you want to stay DRY and keep your controllers clean? Say you have the following
     setup in one of your controllers:
     
-      class UsersController < ApplicationController
-        auto_complete_for :user, [:first_name, :last_name]
-      end
+        class UsersController < ApplicationController
+          auto_complete_for :user, [:first_name, :last_name]
+        end
     
     And you want to use it in a view located in "/blogs", adjust your code in application.js like so:
     
-      $(document).ready(function() {
-         $("input#post_title").autocomplete("auto_complete_for_post_title")
-         // call it by its full path
-         $("input#user_name").autocomplete("/users/auto_complete_for_user_first_name_last_name")
-       });
+        $(document).ready(function() {
+           $("input#post_title").autocomplete("auto_complete_for_post_title")
+           // call it by its full path
+           $("input#user_name").autocomplete("/users/auto_complete_for_user_first_name_last_name")
+         });
        
 4. Here's what the view might look like:
       
-      <% form_for @post do |f| %>
-        ....
-        <%= f.text_field :title %>
-        ...
-      <% end %>  
+        <% form_for @post do |f| %>
+          ....
+          <%= f.text_field :title %>
+          ...
+        <% end %>  
       
 USAGE:
 ======
@@ -103,9 +103,11 @@ For more information, see:
 
 Copyright (c) 2008 Cobalt Edge LLC, released under the MIT license.
 
-== JS Readme (http://dyve.net/jquery/autocomplete.txt)
+JS Readme (http://dyve.net/jquery/autocomplete.txt)
+===================================================
 
 Autocomplete - a jQuery plugin
+==============================
 
 Usage:
 ======
