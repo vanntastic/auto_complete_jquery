@@ -18,6 +18,7 @@ REQUIREMENTS:
 =============
 
 - JQuery (http://jquery.com)
+- map_by_method # sudo gem install map_by_method
 
 INSTALLATION:
 =============
