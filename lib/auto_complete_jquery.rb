@@ -25,6 +25,11 @@ module AutoCompleteJquery
   #
   #   auto_complete_for :post, :title, :limit => 15, :order => 'created_at DESC'
   #
+  # auto_complete_for allows you to pass multiple attributes if you want to return a full name for example
+  #   auto_complete_for :user, [:first_name, :last_name]
+  #     AND you can also pass a delimiter if you want, it defaults to a " " (space)
+  #   auto_complete_for :user, [:first_name, :last_name], :delimiter => ","
+  # 
   # For help on defining text input fields with autocompletion, 
   # see ActionView::Helpers::JavaScriptHelper.
   #
