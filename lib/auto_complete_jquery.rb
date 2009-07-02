@@ -38,6 +38,7 @@ module AutoCompleteJquery
   # * http://www.dyve.net/jquery/?autocomplete
   module ClassMethods
     def auto_complete_for(object, method=[], options = {})
+      method = [method] unless method.is_a?(Array)
       define_method("auto_complete_for_#{object}_#{method.join("_")}") do
         object_constant = object.to_s.camelize.constantize
         options[:delimiter] ||= " "
@@ -49,7 +50,6 @@ module AutoCompleteJquery
         # assemble the conditions
         conditions = ""
         selects = ""
-        method = [method] unless method.is_a?(Array)
         method.each do |arg|
           conditions << "LOWER(#{arg}) LIKE ?"
           conditions << " OR " unless arg == method.last
