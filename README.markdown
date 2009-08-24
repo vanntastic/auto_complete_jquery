@@ -62,7 +62,7 @@ INSTALLATION:
      your routes file:
 
          # EXAMPLE for auto_complete_for_user_first_name_last_name
-         map.resource :posts, :member => {:autocomplete_for_post_title => :get}
+         map.resource :posts, :collection => {:autocomplete_for_post_title => :get}
        
 4. Here's what the view might look like:
       
