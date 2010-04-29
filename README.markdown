@@ -55,7 +55,7 @@ INSTALLATION:
         $(document).ready(function() {
            $("input#post_title").autocomplete("auto_complete_for_post_title")
            // call it by its full path
-  $("input#user_name").autocomplete("/users/auto_complete_for_user_first_name_last_name")
+           $("input#user_name").autocomplete("/users/auto_complete_for_user_first_name_last_name")
          });
          
      NOTE : If you are using RESTful routes, remember to add the autocomplete route to
